@@ -38,7 +38,7 @@ pipeline {
       }
     }
 
-    stage('Run pipeline against a gradle project - other branch') {
+    stage('Run pipeline against a gradle project - br1') {
       when {
          branch 'br1'
       }
@@ -53,5 +53,22 @@ pipeline {
          '''
       }
     }
+
+   stage('Run pipeline against a gradle project - br2'){
+     when {
+         branch 'br2'
+     }
+    steps {
+       echo 'Now you are in br2'
+       
+       sh '''
+       pwd
+       cd Chapter08/sample1
+       ./gradlew checkstyleMain
+     }
+   }
+
+
+
   }
 }
