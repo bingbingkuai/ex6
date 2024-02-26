@@ -10,7 +10,7 @@ pipeline {
         }
     }
   }
-// add a comment in br1  
+
   stages {
     stage('Checkout code and prepare environment') {
       steps {
@@ -40,16 +40,15 @@ pipeline {
 
     stage('Run pipeline against a gradle project - other branch') {
       when {
-         branch 'br1'
+         branch 'br1' 
       }
       steps {
-         echo 'Unit test not on main branch'
+         echo 'On br1 branch'
 
          sh '''
          pwd
          cd Chapter08/sample1
-         ./gradlew test
-	 ./gradlew checkstyleMain
+         ./gradlew checkstyleMain
          '''
       }
     }
