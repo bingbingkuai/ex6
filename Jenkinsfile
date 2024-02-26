@@ -10,27 +10,46 @@ pipeline {
         }
     }
   }
-  
+
   stages {
     stage('Checkout code and prepare environment') {
       steps {
-        git url: 'https://github.com/dlambrig/Continuous-Delivery-with-Docker-and-Jenkins-Second-Edition.git', branch: 'master'
-        sh """
+        git url: 'https://github.com/bingbingkuai/chp5.git', branch: 'master'
+        sh '''
           cd Chapter08/sample1
           chmod +x gradlew
-        """
+        '''
       }
     }
-    stage('Run pipeline against a gradle project - test branch') {
+
+    stage('Run pipeline against a gradle project - main branch') {
+      when {
+        branch 'main'
+      }
+      steps {
+         echo 'On main branch'
+
+         sh ''' 
+         pwd
+         cd Chapter08/sample1
+         ./gradlew test
+         ./gradlew jacocoTestCoverageVerification
+         '''
+      }
+    }
+
+    stage('Run pipeline against a gradle project - other branch') {
       when {
         not { branch 'main' }
       }
       steps {
-         echo 'Unit test not main branch'
-         sh """
-           cd Chapter08/sample1; 
-           ./gradlew test
-         """
+         echo 'Unit test not on main branch'
+
+         sh '''
+         pwd
+         cd Chapter08/sample1
+         ./gradlew checkstyleMain
+         '''
       }
     }
   }
