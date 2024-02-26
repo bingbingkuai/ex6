@@ -40,10 +40,10 @@ pipeline {
 
     stage('Run pipeline against a gradle project - other branch') {
       when {
-        not { branch 'main' }
+         branch 'br1' 
       }
       steps {
-         echo 'Unit test not on main branch'
+         echo 'On br1 branch'
 
          sh '''
          pwd
