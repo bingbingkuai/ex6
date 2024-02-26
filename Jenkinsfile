@@ -40,7 +40,7 @@ pipeline {
 
     stage('Run pipeline against a gradle project - other branch') {
       when {
-        not { branch 'main' }
+         branch 'br1'
       }
       steps {
          echo 'Unit test not on main branch'
@@ -48,7 +48,8 @@ pipeline {
          sh '''
          pwd
          cd Chapter08/sample1
-         ./gradlew checkstyleMain
+         ./gradlew test
+	 ./gradlew checkstyleMain
          '''
       }
     }
